@@ -1,0 +1,164 @@
+package pojo;
+
+import java.util.Scanner;
+
+package pojo;
+
+public class Vehiculo {
+	//atributos
+	private String marca;
+	private String modelo;
+	private float precio;
+	
+	//constructores
+	public Vehiculo(String marca, String modelo, float precio) {
+		super();
+		this.marca = marca;
+		this.modelo = modelo;
+		this.precio = precio;
+	}
+	
+	
+	//getters & setters
+	public String getMarca() {
+		return marca;
+	}
+
+
+
+
+
+	public void setMarca(String marca) {
+		this.marca = marca;
+	}
+
+
+
+
+
+	public String getModelo() {
+		return modelo;
+	}
+
+
+
+
+
+	public void setModelo(String modelo) {
+		this.modelo = modelo;
+	}
+
+
+
+
+
+	public void setPrecio(float precio) {
+		this.precio = precio;
+	}
+
+
+	
+	
+	public float getPrecio() {
+		return precio;
+	}
+
+	
+}//end Vehiculo
+
+
+public class MainVehiculo {
+	
+	public static void main(String[] args) {
+		int num = 0;
+		
+		
+		Scanner sc = new Scanner(System.in);
+		
+		System.out.println("Introduce numero de vehiculos:");
+		num = sc.nextInt();
+		
+		Vehiculo[] coches = new Vehiculo[num];
+		
+		introducirVehiculo(num, coches);
+		mostrarDatos(coches);
+		masBarato(coches);
+		
+		/*
+		for(int i=0; i<num; i++) {	//en el main funcionan los getters & setters
+			System.out.println("***Generador de vehiculos***");
+			System.out.println("Vehiculo #" + i+1);
+			System.out.println("Marca: ");
+			coches[i].setMarca(marca);
+			System.out.println("Modelo: ");
+			coches[i].setModelo(modelo);
+			System.out.println("Precio: ");
+			coches[i].setPrecio(precio);
+			System.out.println("---------------");
+			coches[i].mostrarDatos();
+		}
+		*/
+		
+		
+		sc.close();
+	}
+	
+	public static String mostrarDatos(Vehiculo coches[]) {//static -> no es del objeto, le corresponde a la clase.
+		String descripcion = "";
+		
+		for(int i=0; i<coches.length; i++) {
+			descripcion = "Marca: " + coches[i].getMarca() + "Modelo: " + coches[i].getModelo() + "Precio: " + coches[i].getPrecio();
+		}
+		
+		return descripcion;
+		
+	}
+	
+	public static void masBarato(Vehiculo coches[]) {
+		int indiceMasBarato = 0;
+		
+		try {
+			for(int i=0; i<coches.length; i++) {
+				if(coches[i].getPrecio() < coches[i+1].getPrecio()) {
+					indiceMasBarato = i;
+				}
+				System.out.println("\nNuestra super oferta!!\nMarca: " + coches[indiceMasBarato].getMarca() + "\nModelo: " + coches[indiceMasBarato].getModelo() + "\nPrecio: " + coches[indiceMasBarato].getPrecio());
+			}
+		} catch(Exception e) {
+			System.out.println("Hasta otra!");
+		}
+	}
+	
+	public static void introducirVehiculo(int num, Vehiculo[] coches) {
+		Scanner sc = new Scanner(System.in);
+		String marca = "";
+		String modelo = "";
+		String saltoDLinea = "";
+		float precio = 0;
+		
+		
+		for(int i=0; i<coches.length; i++) {
+			System.out.println("***Generador de vehiculos***");
+			System.out.println("Vehiculo #" + (i + 1));
+			System.out.println("Marca: ");
+			marca = sc.nextLine();
+			System.out.println("Modelo: ");
+			modelo = sc.nextLine();
+			System.out.println("Precio: ");
+			precio = sc.nextFloat();
+			saltoDLinea = sc.nextLine();
+			coches[i] = new Vehiculo(marca, modelo, precio);
+			System.out.println("-----------------------------");
+		}
+		
+		sc.close();
+	}
+	
+	
+	
+	
+}
+
+
+
+
