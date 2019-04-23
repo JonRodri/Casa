@@ -272,7 +272,67 @@ public class Perro {
 
 }//end Perro
 
+
+public class MainPerro {
+
+	public static void main(String[] args) throws IOException {
+		int ultimo = 0;
+		
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		//creación de 1 objeto
+		//Perro dog = new Perro();
+		
+		//creación de un array de objetos
+		Perro[] perros = new Perro[10];
+		
+		perros[0] = new Perro("Husky siberiano", "Siberia", 13, "Extrovertido, inteligente, alerta, amigable y gentil.", 53, 19);
+		perros[1] = new Perro("Pastor aleman", "Alemania", 11, "Leal, obediente, curisoso, inteligente, alerta, confiado, vigilante y valiente.", 35, 62);
+		perros[2] = new Perro("Galgo", "España", 13, "Educado, ágil y rápido.", 50, 24);
+		
+		menu(perros);
+
+
+		br.close();
 	
+	}//main
+	
+	static void menu(Perro[] perros) throws IOException {
+		int opc = 0;
+		int ultimo = 0;
+		String sOpc = "";
+		
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		
+	
+		System.out.println("PERRO");
+		do {
+			System.out.println("Elige una opcion:");
+			System.out.println("1. Listar");
+			System.out.println("2. Crear");
+			System.out.println("3. Modificar");
+			System.out.println("4. Eliminar");
+			System.out.println("5. Salir");
+			sOpc = br.readLine();
+			opc = Integer.parseInt(sOpc);
+		} while(opc < 1 || opc > 5);
+		
+		switch(opc) {
+		case 1: 
+			ultimo = Perro.listarPerros(perros);	
+			break;
+		case 2: 			
+			Perro.crearPerros(perros, ultimo);
+			break;
+		case 3: 
+			Perro.modificarPerros(perros);
+		case 4: 
+			Perro.eliminarPerros(perros);
+		case 5: 
+			System.out.println("Hasta luego! ;)");
+		}
+		
+	}
+}
 	
 	
 	
