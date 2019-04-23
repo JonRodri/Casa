@@ -1,0 +1,279 @@
+package pojo;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Scanner;
+
+public class Perro {
+	//atributos
+	private String raza;
+	private String origen;
+	private int esperanza;
+	private String temperamento;
+	private int altura;
+	private int peso;
+	public static int ultimo;	//static -> pertenece a la clase, ya no a un solo objeto.
+	
+	
+	//constructores
+	public Perro() {
+		super();
+	}
+
+    
+	public Perro(String raza, String origen, int esperanza, String temperamento, int altura, int peso) {	//*float me daba problemas en el main a la hora de instanciar los constructores con printFORMAT, me lo tomaba como 2 enteros.
+		super();
+		this.raza = raza;
+		this.origen = origen;
+		this.esperanza = esperanza;
+		this.temperamento = temperamento;
+		this.altura = altura;
+		this.peso = peso;
+	}
+
+
+	//setters & getters
+	public String getRaza() {
+		return raza;
+	}
+
+
+	public void setRaza(String raza) {
+		this.raza = raza;
+	}
+
+
+	public String getOrigen() {
+		return origen;
+	}
+
+
+	public void setOrigen(String origen) {
+		this.origen = origen;
+	}
+
+
+	public int getEsperanza() {
+		return esperanza;
+	}
+
+
+	public void setEsperanza(int esperanza) {
+		this.esperanza = esperanza;
+	}
+
+
+	public String getTemperamento() {
+		return temperamento;
+	}
+
+
+	public void setTemperamento(String temperamento) {
+		this.temperamento = temperamento;
+	}
+
+
+	public int getAltura() {
+		return altura;
+	}
+
+
+	public void setAltura(int altura) {
+		this.altura = altura;
+	}
+
+	
+	public int getPeso() {
+		return peso;
+	}
+
+	
+	public void setPeso(int peso) {
+		this.peso = peso;
+	}
+	
+
+	//toString
+	@Override
+	public String toString() {
+		return "Perro [raza=" + raza + ", origen=" + origen + ", esperanza=" + esperanza + ", temperamento="
+				+ temperamento + ", altura=" + altura + ", peso=" + peso + "]";
+	}
+	
+	//otros métodos
+	static void menu(Perro[] perros) throws IOException {
+		int opc = 0;
+		
+		String sOpc = "";
+		
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		
+		System.out.println("*******");
+		System.out.println("*PERRO*");
+		System.out.println("*******");
+		do {
+			System.out.println("Elige una opcion:");
+			System.out.println("1. Listar");
+			System.out.println("2. Crear");
+			System.out.println("3. Modificar");
+			System.out.println("4. Eliminar");
+			System.out.println("5. Salir");
+			sOpc = br.readLine();
+			opc = Integer.parseInt(sOpc);
+		} while(opc < 1 || opc > 5);
+		
+		switch(opc) {
+		case 1: 
+			Perro.listarPerros(perros);	
+			break;
+		case 2: 			
+			Perro.crearPerros(perros, Perro.ultimo);
+			break;
+		case 3: 
+			Perro.modificarPerros(perros);
+		case 4: 
+			Perro.eliminarPerros(perros);
+		case 5: System.out.println("Hasta luego! ;)");
+		}
+		
+	}
+	
+	
+	public static int listarPerros(Perro[] perros) throws IOException {
+		int ultimo = 0;
+		//String saltoDeLinea = "";
+		
+		try {
+			for(int i=0; i<perros.length; i++) {
+				/*
+				System.out.println(perros[i].toString() + "\n\n");
+				*/
+				ultimo ++;
+				/*
+				String sEsperanza = Integer.toString(perros[i].getEsperanza());
+				String sAltura = Integer.toString(perros[i].getAltura());
+				String sPeso = Integer.toString(perros[i].getPeso());
+				*/
+				//TODO -> Mostrar datos con printf.
+				System.out.printf("Raza: %s\nOrigen: %s\nEsperanza: %s\nTemperamento: %s\nAltura: %s\nPeso: %s\n\n", perros[i].getRaza(), perros[i].getOrigen(), perros[i].getEsperanza(), perros[i].getTemperamento(), perros[i].getAltura(), perros[i].getPeso());
+				
+			}
+		} catch(NullPointerException e) {
+			System.out.println("Hasta aqui puedo leer.\n");
+			return ultimo;	//devuelve el valor a 0!
+		} finally {
+			menu(perros);
+		}
+		
+		return ultimo;
+	}
+	
+
+	public static void crearPerros(Perro[] perros, int ultimo) throws IOException {
+		Scanner sc = new Scanner(System.in);
+		String saltoDeLinea;
+		String raza;
+		String origen;
+		String temperamento;
+		String resp = "";
+		int esperanza;
+		int altura;
+		int peso;
+		
+		do {
+			
+		System.out.println("\n***Creando perro...***");
+		for(int i=ultimo; i<perros.length; i++) {
+				System.out.println("Raza: ");
+				raza = sc.nextLine();
+				System.out.println("Origen: ");
+				origen = sc.nextLine();
+				System.out.println("Esperanza de vida (Años aprox.): ");
+				esperanza = sc.nextInt();
+				saltoDeLinea = sc.nextLine();
+				System.out.println("Temperamento: ");	//El comportamiento del nextInt() no es el que esperas. Cuándo le introduces de entrada un 1714 en realidad estás introduciendo un 1714 y un salto de línea(\n) y el nextInt() no te consume el salto de línea (\n).
+				temperamento = sc.nextLine();
+				System.out.println("Altura (cm): ");
+				altura = sc.nextInt();
+				System.out.println("Peso (kg): ");
+				peso = sc.nextInt();
+				saltoDeLinea = sc.nextLine();
+				
+				perros[i] = new Perro(raza, origen, esperanza, temperamento, altura, peso);
+				System.out.println("***Perro creado!***\n");
+				System.out.println("Quieres crear otro perro? (Si/No)");
+				resp = sc.nextLine();
+				if ("No".equalsIgnoreCase(resp)) {
+					menu(perros);
+				} else if ("Si".equalsIgnoreCase(resp)) {
+					System.out.println("Ok ;)\n");
+				} 
+		}//for
+		
+		} while(!"Si".equalsIgnoreCase(resp) || !"No".equalsIgnoreCase(resp));
+		
+		sc.close();
+	}
+
+
+	public static void modificarPerros(Perro[] perros) {
+		Scanner sc = new Scanner(System.in);
+		String raza = "";
+		String niuRaza = "";
+		String niuOrigen = "";
+		String niuTemp = "";
+		int niuEsp = 0;
+		int niuAlt = 0;
+		int niuPeso = 0;
+		
+		System.out.println("\nIntroduce la raza que quieres modificar: ");
+		raza = sc.nextLine();
+		for(int i=0; i<perros.length; i++) {
+			if(perros[i].getRaza().equalsIgnoreCase(raza)) {
+				System.out.println("Raza: ");
+				niuRaza = sc.nextLine();
+				System.out.println("Origen: ");
+				niuOrigen = sc.nextLine();
+				System.out.println("Esperanza de vida: ");
+				niuEsp = sc.nextInt();
+				System.out.println("Temperamento: ");
+				niuTemp = sc.nextLine();
+				System.out.println("Altura: ");
+				niuAlt = sc.nextInt();
+				System.out.println("Peso: ");
+				niuPeso = sc.nextInt();
+				
+				perros[i] = new Perro(niuRaza, niuOrigen, niuEsp, niuTemp, niuAlt, niuPeso);
+				System.out.println("***Perro modificado***\n");
+				System.out.println("");
+			}
+		}
+		sc.close();
+	}
+
+
+	public static void eliminarPerros(Perro[] perros) throws IOException {
+		int iterador = 0;
+		
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		
+		System.out.println("\nElige el perro que deseas eliminar:");
+		iterador = br.read();
+		for(int i=0; i<perros.length; i++) {
+			if(i == iterador) {
+				for(int j=i; i<perros.length - 1; j++) {	//si eliminamos, tendremos un objeto menos en el array
+					perros[j] = perros[j - 1];	//adelantamos los objetos una posicion
+				}
+			}
+		}
+	}
+
+
+}//end Perro
+
+	
+	
+	
+	
+
