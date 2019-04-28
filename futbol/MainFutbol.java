@@ -23,14 +23,14 @@ public class MainFutbol {
 		
 		
 		System.out.println("*************");
-		System.out.println("*+*+*MENÚ*+*+*");
+		System.out.println("*+*+*MENÃš*+*+*");
 		System.out.println("*************");
-		System.out.printf("Bienvenido, aquí podrás crear y gestionar el equipo de tus sueños.\nPara empezar démosle un nombre al club: ");
+		System.out.printf("Bienvenido, aquÃ­ podrÃ¡s crear y gestionar el equipo de tus sueÃ±os.\nPara empezar dÃ©mosle un nombre al club: ");
 		nombreClub = sc.nextLine();
 		System.out.println("-|-|-" + nombreClub + "-|-|-");
 		while(!salir) {
 			do {
-				System.out.printf("1. Inscribir jugador\n2. Listar plantilla\n3. Entrenar\n4. Jugar partido\n5. Enfermería\n6. Salir\n\nElige una opción:");
+				System.out.printf("1. Inscribir jugador\n2. Listar plantilla\n3. Entrenar\n4. Jugar partido\n5. EnfermerÃ­a\n6. Salir\n\nElige una opciÃ³n:");
 				opc = sc.nextInt();
 				saltoDLinea = sc.nextLine();
 				
@@ -47,7 +47,7 @@ public class MainFutbol {
 						entrenar();
 						entrenosSemanales --;
 					} else {
-						System.out.println("Has entrenado suficiente por ahora.\n¡Ve a la cancha y demuestra lo que has trabajado en los entrenamientos!");
+						System.out.println("Has entrenado suficiente por ahora.\nÂ¡Ve a la cancha y demuestra lo que has trabajado en los entrenamientos!");
 					}
 					break;
 				case 4:
@@ -73,7 +73,7 @@ public class MainFutbol {
 		
 		Doctor doctor = new Doctor("Alberto", "Lopez", 54, "Doctorado", 15);
 		
-		//dependiendo de la experiencia del Doctor los jugadores se curan antes o después
+		//dependiendo de la experiencia del Doctor los jugadores se curan antes o despuÃ©s
 		for(Futbolista l : lesionados) {
 			if(doctor.getExp() < 5) {
 				l.setDiasLesion(15);
@@ -110,7 +110,7 @@ public class MainFutbol {
 			}
 		} else if("Defensa".equals(e.getEstrategia())) {
 			System.out.println("Entrenando los siguientes conceptos... ");
-			System.out.println("Entradas\nFueras de juego\nSacar el balón desde atrás\nJugadas a balón parado");
+			System.out.println("Entradas\nFueras de juego\nSacar el balÃ³n desde atrÃ¡s\nJugadas a balÃ³n parado");
 			for(Futbolista f : futbolistas) {
 				niuDefensa = (float) (f.getDefensa() * 1.01);
 				f.setAtaque(niuDefensa);
@@ -118,14 +118,14 @@ public class MainFutbol {
 			}
 		}
 		
-		mediaAtaque = suma / futbolistas.size();
+		mediaAtaque = suma / futbolistas.size();	//TODO necesito pasar estos valores a la funciÃ³n jugarPartido()
 		mediaDefensa = suma / futbolistas.size();
 	}
 
 
 	private static ArrayList<Futbolista> jugarPartido(int numJornada, int mediaDefensa, int mediaAtaque, String nombreClub) {
-		int numAleat = (int) (Math.random()*(10-30));	//numero aleatorio entre 10 y 30 que será la energía que consumió el jugador
-		int jornadaLesion = (int) (Math.random()*(5-15));	//jornada de lesión aleatoria
+		int numAleat = (int) (Math.random()*(10-30));	//numero aleatorio entre 10 y 30 que serÃ¡ la energÃ­a que consumiÃ³ el jugador
+		int jornadaLesion = (int) (Math.random()*(5-15));	//jornada de lesiÃ³n aleatoria
 		int niuFuerza;
 		int indiceLesionado;
 		int dorsalSeleccionado;
@@ -147,7 +147,7 @@ public class MainFutbol {
 				if (f.getDorsal() == dorsalSeleccionado) {
 					 titulares.add(f);
 				} else {
-					System.out.println("Selecciona un dorsal válido :/");
+					System.out.println("Selecciona un dorsal vÃ¡lido :/");
 					estupido = true;
 				}
 			}
@@ -156,28 +156,28 @@ public class MainFutbol {
 		//goles del equipo contrario en base a la media defensiva
 		if(mediaDefensa < 70) {
 			visitantes = 4;
-			System.out.println("El encuentro finalizó." + nombreClub + locales + ":" + visitantes + "Rival");
+			System.out.println("El encuentro finalizÃ³." + nombreClub + locales + ":" + visitantes + "Rival");
 		}
 		
-		//por cada futbolista titular resto un porcentaje aleatorio de energía
+		//por cada futbolista titular resto un porcentaje aleatorio de energÃ­a
 		for(Futbolista t : titulares) {	
 			niuFuerza = t.getFuerza();
 			niuFuerza -= numAleat;
 			t.setFuerza(niuFuerza);
 		}
 		
-		//por cada lesionado resto una jornada para su recuperación
+		//por cada lesionado resto una jornada para su recuperaciÃ³n
 		for(Futbolista l : lesionados) {	
 			l.setDiasLesion(l.getDiasLesion()-1);
 		}
 		
-		//si en la jornada de lesión hay un jugador con menos del 60% de energía se lesiona
+		//si en la jornada de lesiÃ³n hay un jugador con menos del 60% de energÃ­a se lesiona
 		if(numJornada == jornadaLesion) {	
 			for(Futbolista l: lesionados) {
 				for(Futbolista t : titulares) {
 					if(t.getFuerza() < 60) {
 						t.setLesionado(true);
-						System.out.println(t.getNombre() + " " + t.getApellido() + " se ha lesionado en este encuentro y deberá pasar por la enfermería.");
+						System.out.println(t.getNombre() + " " + t.getApellido() + " se ha lesionado en este encuentro y deberÃ¡ pasar por la enfermerÃ­a.");
 						Futbolista lFutbolista = new Futbolista(t.getNombre(), t.getApellido(), t.getEdad(), t.getDorsal(), t.getPosicion());	//creo un nuevo objeto Futbolista e instancio con los atributos del lesionado
 						lesionados.add(lFutbolista);	//agrego el objeto al ArrayList de lesionados
 						indiceLesionado = futbolistas.indexOf(t);	
